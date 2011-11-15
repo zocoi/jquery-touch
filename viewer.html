@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Simple pdf.js page viewer</title>
+        <link rel="stylesheet" href="css/viewer.css"/>
+        <!-- jQuery -->
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+        <script type="text/javascript" src="js/compatibility.js"></script> 
+        <script type="text/javascript" src="js/pdf.js"></script> 
+
+        <script type="text/javascript">PDFJS.workerSrc = 'js/pdf.js';</script>
+
+        <script type="text/javascript" src="js/viewer.js"></script>
+        <script type="text/javascript" src="js/jquery.jswipe.js"></script>
+        <script>
+        $(function(){
+          $("#viewer").touch({
+            swipeLeft:  function() { PDFView.page--; },
+            swipeRight: function() { PDFView.page++; },
+            pinch:      function(scale) { PDFView.parseScale(scale); }
+          });
+        });
+
+        </script>
+        
+        <!-- simulator -->
+  
+        <script src="https://github.com/brian-c/phantom-limb/raw/master/phantomLimb.js"></script>
+        <script>
+        window.addEventListener('load', function() {
+          phantomLimb.init({src: 'https://github.com/brian-c/phantom-limb/raw/master/limb-black.png', lefty: false});
+        }, false);
+        </script>
+  </head>
+
+  <body>
+    <div id="controls">
+      <button id="previous" onclick="PDFView.page--;" oncontextmenu="return false;">
+        <img src="images/go-up.svg" align="top" height="16"/>
+        Previous
+      </button>
+
+      <button id="next" onclick="PDFView.page++;" oncontextmenu="return false;">
+        <img src="images/go-down.svg" align="top" height="16"/>
+        Next
+      </button>
+
+      <div class="separator"></div>
+
+      <input type="number" id="pageNumber" onchange="PDFView.page = this.value;" value="1" size="4" min="1" />
+
+      <span>/</span>
+      <span id="numPages">--</span>
+
+      <div class="separator"></div>
+
+      <button id="zoomOut" title="Zoom Out" onclick="PDFView.zoomOut();" oncontextmenu="return false;">
+        <img src="images/zoom-out.svg" align="top" height="16"/>
+      </button>
+      <button id="zoomIn" title="Zoom In" onclick="PDFView.zoomIn();" oncontextmenu="return false;">
+        <img src="images/zoom-in.svg" align="top" height="16"/>
+      </button>
+
+      <div class="separator"></div>
+
+      <select id="scaleSelect" onchange="PDFView.parseScale(this.value);" oncontextmenu="return false;">
+        <option id="customScaleOption" value="custom"></option>
+        <option value="0.5">50%</option>
+        <option value="0.75">75%</option>
+        <option value="1">100%</option>
+        <option value="1.25">125%</option>
+        <option value="1.5" selected="selected">150%</option>
+        <option value="2">200%</option>
+        <option id="pageWidthOption" value="page-width">Page Width</option>
+        <option id="pageFitOption" value="page-fit">Page Fit</option>
+      </select>
+
+      <div class="separator"></div>
+
+      <button id="print" onclick="window.print();" oncontextmenu="return false;">
+        <img src="images/document-print.svg" align="top" height="16"/>
+        Print
+      </button>
+
+      <button id="download" title="Download" onclick="PDFView.download();" oncontextmenu="return false;">
+        <img src="images/download.svg" align="top" height="16"/>
+        Download
+      </button>
+
+      <div class="separator"></div>
+
+      <input id="fileInput" type="file" oncontextmenu="return false;"/>
+
+      <div class="separator"></div>
+
+      <a href="#" id="viewBookmark" title="Bookmark (or copy) current location">
+        <img src="images/bookmark.svg" alt="Bookmark" align="top" height="16"/>
+      </a>
+
+      <span id="info">--</span>
+    </div>
+
+    <div id="sidebar">
+      <div id="sidebarBox">
+        <div id="sidebarScrollView">
+          <div id="sidebarView"></div>
+        </div>
+        <div id="outlineScrollView" hidden='true'>
+          <div id="outlineView"></div>
+        </div>
+        <div id="sidebarControls">
+          <button id="thumbsSwitch" title="Show Thumbnails" onclick="PDFView.switchSidebarView('thumbs')" data-selected>
+            <img src="images/nav-thumbs.svg" align="top" height="16" alt="Thumbs" />
+          </button>
+          <button id="outlineSwitch" title="Show Document Outline" onclick="PDFView.switchSidebarView('outline')" disabled>
+            <img src="images/nav-outline.svg" align="top" height="16" alt="Document Outline" />
+          </button>
+        </div>
+     </div>
+    </div>
+
+    <div id="loading">Loading... 0%</div>
+    <div id="viewer"></div>
+  </body>
+</html>
+

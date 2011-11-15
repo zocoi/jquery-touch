@@ -1,0 +1,85 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+
+#header{}
+
+
+#toolbar{
+  position: fixed;
+  width:100%;
+  border: 1px solid #ccc;
+  padding: 5px 0;
+  height: 25px;
+  z-index: 1;
+  background-image: linear-gradient(bottom, rgb(173,171,170) 0%, rgb(224,221,224) 58%);
+  background-image: -o-linear-gradient(bottom, rgb(173,171,170) 0%, rgb(224,221,224) 58%);
+  background-image: -moz-linear-gradient(bottom, rgb(173,171,170) 0%, rgb(224,221,224) 58%);
+  background-image: -webkit-linear-gradient(bottom, rgb(173,171,170) 0%, rgb(224,221,224) 58%);
+  background-image: -ms-linear-gradient(bottom, rgb(173,171,170) 0%, rgb(224,221,224) 58%);
+
+  background-image: -webkit-gradient(
+    linear,
+    left bottom,
+    left top,
+    color-stop(0, rgb(173,171,170)),
+    color-stop(0.58, rgb(224,221,224))
+  );
+}
+
+#toolbar > div{
+  display:inline;
+  border-right: 1px solid #ccc;
+  padding-right: 10px; 
+  margin-right: 10px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+#toolbar #pageNumber{
+  width: 25px;
+}
+
+#content-container
+{
+	float: left;
+	width: 100%;
+  background-color:#ccc;
+  margin-top:37px;
+}
+
+#content
+{
+	float: right;
+	width: 80%;
+	padding: 20px 0;
+	margin: 0 0 0 4%;
+}
+
+#aside
+{
+	float: left;
+	width: 16%;
+  padding: 20px 0;
+  background-color: yellow;
+  overflow: auto;
+}
+
+#aside .thumbnails{
+  display:block;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 5px 0;
+  box-shadow: 0 4px 10px #000000;
+}
+
+
+.page {
+  background-color: white;
+  box-shadow: 0 4px 10px #000000;
+  margin: 10px auto;
+  overflow: hidden;
+  position: relative;
+}
