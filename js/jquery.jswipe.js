@@ -3,7 +3,7 @@
  * Modifications for AaltoWindow
  * Add vertical scrolling
  * Support Firefox 8 and W3C touch event compatible browsers
- * v0.1 Hung Dao 2011
+ * v0.1 Hung Dao, Michael Vu 2011
  *
  * 
  */
