@@ -26,14 +26,14 @@
 		
 		return this.each(function() {
 			
-			var me = $(this)
+			var me = $(this);
 			
 			// Touches
-			var originalTouches = []
-			var finalTouches = []
-      var touchIds = []
+			var originalTouches = [];
+			var finalTouches = [];
+      var touchIds = [];
       // Distance from the first two touches
-			var originalDistance = 0
+			var originalDistance = 0;
       
 			
 			
@@ -44,19 +44,27 @@
           originalTouches[touches[i].identifier] = {x: touches[i].pageX, y: touches[i].pageY};
           touchIds.push(touches[i].identifier);
         }
-				_touchStart();
+        
+				//_touchStart();
 			}
       
       function mozTouchDown(event) {
         originalTouches[event.streamId] = {x: event.clientX, y: event.clientY};
         touchIds.push(event.streamId);
+        console.log('event: ' + event);
+        console.log('touchIds: ' + touchIds);
+        console.log('touchIds[0]: ' + touchIds[0]);
+        console.log('originalTouches: ' +originalTouches);
+        console.log('touchIds.length: ' + touchIds.length);
         _touchStart();
       }
       
       function _touchStart() {
-        var c1 = Math.abs(originalTouches[touchIds[0]].x-originalTouches[touchIds[1]].x);
-				var c2 = Math.abs(originalTouches[touchIds[0]].y-originalTouches[touchIds[1]].y);
-				originalDistance = Math.sqrt(c1 * c1 + c2 * c2);
+        if(touchIds.length > 1) {
+          var c1 = Math.abs(originalTouches[touchIds[0]].x-originalTouches[touchIds[1]].x);
+          var c2 = Math.abs(originalTouches[touchIds[0]].y-originalTouches[touchIds[1]].y);
+          originalDistance = Math.sqrt(c1 * c1 + c2 * c2);
+        }
       }
 			
 			// Store coordinates as finger is swiping
@@ -84,44 +92,54 @@
         // }
 			}
       
-      function MozTouchMove(event) {
+      function mozTouchMove(event) {
         finalTouches[event.streamId] = {x: event.clientX, y: event.clientY};
         _touchMove(event);
       }
       
-      function _touchMove() {
-			  event.preventDefault(event);
+      function _touchMove(event) {
+			  event.preventDefault();
         
         // Scroll
         var changeY = originalTouches[touchIds[0]].y - finalTouches[touchIds[0]].y;
 				window.scrollBy(0,changeY);
         
         // Pinch
-        var c1 = Math.abs(finalTouches[touchIds[0]].x - finalTouches[touchIds[1]].x);
-				var c2 = Math.abs(finalTouches[touchIds[0]].y - finalTouches[touchIds[1]].y);
-				var touchesDist = m.sqrt(c1*c1+c2*c2);
-				
-				scale = touchesDist / touchesDistStart;
-				defaults.pinch(scale);
+        if(touchIds.length > 1) {
+          var c1 = Math.abs(finalTouches[touchIds[0]].x - finalTouches[touchIds[1]].x);
+          var c2 = Math.abs(finalTouches[touchIds[0]].y - finalTouches[touchIds[1]].y);
+          var touchesDist = Math.sqrt(c1*c1+c2*c2);
+          
+          scale = touchesDist / touchesDistStart;
+          defaults.pinch(scale);
+        }
         
 			}
       
       
 			// Done Swiping			
 			function touchEnd(event) {
-				//console.log('Ending swipe gesture...')
-        var changeX = originalTouches[touchIds[0]].x - finalTouches[touchIds[0]].x;
-				var changeY = originalTouches[touchIds[0]].y - finalTouches[touchIds[0]].y;
-        // Calculate if the swipe was left or right
-				if(changeY < defaults.threshold.y && changeY > (defaults.threshold.y*-1)) {
-					
-					if(changeX > defaults.threshold.x) {
-						defaults.swipeLeft();
-					}
-					if(changeX < (defaults.threshold.x*-1)) {
-						defaults.swipeRight();
-					}
-				}
+        if(touchIds.length = 1) {
+          //console.log('Ending swipe gesture...')
+          var changeX = originalTouches[touchIds[0]].x - finalTouches[touchIds[0]].x;
+          console.log(changeX);
+          var changeY = originalTouches[touchIds[0]].y - finalTouches[touchIds[0]].y;
+          console.log(changeY);
+          // Calculate if the swipe was left or right
+          if(changeY < defaults.threshold.y && changeY > (defaults.threshold.y*-1)) {
+            
+            if(changeX > defaults.threshold.x) {
+              defaults.swipeLeft();
+            }
+            if(changeX < (defaults.threshold.x*-1)) {
+              defaults.swipeRight();
+            }
+          }
+        }
+        
+        originalTouches = [];
+        finalTouches = [];
+        touchIds = [];
 			}
 			
 			// Swipe was canceled
@@ -136,10 +154,10 @@
 			}
 			
 			// Add gestures to all swipable areas
-			this.addEventListener("touchstart", touchStart, false);
-			this.addEventListener("touchmove", touchMove, false);
-			this.addEventListener("touchend", touchEnd, false);
-			this.addEventListener("touchcancel", touchCancel, false);
+			//this.addEventListener("touchstart", touchStart, false);
+			//this.addEventListener("touchmove", touchMove, false);
+			//this.addEventListener("touchend", touchEnd, false);
+			//this.addEventListener("touchcancel", touchCancel, false);
       
       this.addEventListener("MozTouchDown", mozTouchDown, false);
 			this.addEventListener("MozTouchMove", mozTouchMove, false);
