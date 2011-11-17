@@ -1,36 +1,40 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Simple pdf.js page viewer</title>
-        <link rel="stylesheet" href="css/viewer.css"/>
-        <!-- jQuery -->
-        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
-        <script type="text/javascript" src="js/compatibility.js"></script> 
-        <script type="text/javascript" src="js/pdf.js"></script> 
+  <head>
+    <title>Simple pdf.js page viewer</title>
+    <link rel="stylesheet" href="css/viewer.css"/>
+    <!-- jQuery -->
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+    <script type="text/javascript" src="js/compatibility.js"></script> 
+    <script type="text/javascript" src="js/pdf.js"></script> 
 
-        <script type="text/javascript">PDFJS.workerSrc = 'js/pdf.js';</script>
+    <script type="text/javascript">PDFJS.workerSrc = 'js/pdf.js';</script>
 
-        <script type="text/javascript" src="js/viewer.js"></script>
-        <script type="text/javascript" src="js/jquery.jswipe.js"></script>
-        <script>
-        $(function(){
-          $("#viewer").touch({
-            swipeLeft:  function() { PDFView.page--; },
-            swipeRight: function() { PDFView.page++; },
-            pinch:      function(scale) { PDFView.parseScale(scale); }
-          });
-        });
+    <script type="text/javascript" src="js/viewer.js"></script>
+    <script type="text/javascript" src="js/jquery.touch.js"></script>
+    <script>
+    $(function(){
+      $("#viewer").touch({
+        swipeLeft:  function() { PDFView.page--; },
+        swipeRight: function() { PDFView.page++; },
+        pinch:      function(scale) { PDFView.parseScale(scale); }
+      });
+    });
 
-        </script>
-        
-        <!-- simulator -->
-  
-        <script src="https://github.com/brian-c/phantom-limb/raw/master/phantomLimb.js"></script>
-        <script>
-        window.addEventListener('load', function() {
-          phantomLimb.init({src: 'https://github.com/brian-c/phantom-limb/raw/master/limb-black.png', lefty: false});
-        }, false);
-        </script>
+    </script>
+    
+    <!-- single touch simulator -->
+    <!--
+    <script src="https://github.com/brian-c/phantom-limb/raw/master/phantomLimb.js"></script>
+    <script>
+    window.addEventListener('load', function() {
+      phantomLimb.init({src: 'https://github.com/brian-c/phantom-limb/raw/master/limb-black.png', lefty: false});
+    }, false);
+    </script>
+    -->
+    <!-- multi touch simulator -->
+    <script type="text/javascript" src="js/addTouch.js"></script>
+    <link rel="stylesheet" href="css/addTouch.css"/>
   </head>
 
   <body>

@@ -3,7 +3,7 @@
 
 'use strict';
 
-var kDefaultURL = 'upload/80AA3BD8d01.pdf';
+var kDefaultURL = 'upload/T-86_5141_lecture_6_slides.pdf';
 var kDefaultScale = 1.5;
 var kDefaultScaleDelta = 1.1;
 var kCacheSize = 20;
