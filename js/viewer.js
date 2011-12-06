@@ -3,7 +3,7 @@
 
 'use strict';
 
-var kDefaultURL = 'upload/T-86_5141_lecture_6_slides.pdf';
+var kDefaultURL = 'upload/Opinto-opas2011_web.pdf';
 var kDefaultScale = 1.5;
 var kDefaultScaleDelta = 1.1;
 var kCacheSize = 20;

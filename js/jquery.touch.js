@@ -2,7 +2,7 @@
  * Modifications for AaltoWindow
  * Add vertical scrolling
  * Support Firefox 8 and W3C touch event compatible browsers
- * v0.1 Hung Dao, Michael Vu 2011
+ * v0.1 Hung Dao 2011
  *
  * 
  */
@@ -115,7 +115,7 @@
           var changeY = originalTouches[touchIds[0]].y - finalTouches[touchIds[0]].y;
           window.scrollBy(0, changeY);
 
-        } else {
+        } else if (touchIds.length == 2) {
           // Pinch
           //console.log('Pinch...');
           //console.log('touchIds: ');
@@ -128,12 +128,13 @@
           var c2 = Math.abs(finalTouches[touchIds[0]].y - finalTouches[touchIds[1]].y);
           finalDistance = Math.sqrt(c1 * c1 + c2 * c2);
 
-          var scale = finalDistance / originalDistance;
+          var scale = Math.round(100 * finalDistance / originalDistance) / 100;
           //console.log('originalDistance: ' + originalDistance);
           //console.log('finalDistance: ' + finalDistance);
           //console.log('scale: ' + scale);
+          //console.log(scale);
           defaults.pinch(scale);
-        }
+          } else {}
 
       }
 
@@ -161,12 +162,12 @@
           }
         }
         
-        console.log('touchIds: ');
-        console.log(touchIds);
-        console.log('originalTouches: ');
-        console.log(originalTouches);
-        console.log('finalTouches: ');
-        console.log(finalTouches);
+        // console.log('touchIds: ');
+        // console.log(touchIds);
+        // console.log('originalTouches: ');
+        // console.log(originalTouches);
+        // console.log('finalTouches: ');
+        // console.log(finalTouches);
         
         finalDistance = originalDistance = 0;
 
@@ -175,14 +176,14 @@
         delete finalTouches[event.streamId];
         var index = touchIds.indexOf(event.streamId);
         touchIds.splice(index, 1);
-        console.log("touchEnd");
-        console.log('touchIds: ');
-        console.log(touchIds);
-        console.log('originalTouches: ');
-        console.log(originalTouches);
-        console.log('finalTouches: ');
-        console.log(finalTouches);
-        console.log("touchEndStop");
+        // console.log("touchEnd");
+        // console.log('touchIds: ');
+        // console.log(touchIds);
+        // console.log('originalTouches: ');
+        // console.log(originalTouches);
+        // console.log('finalTouches: ');
+        // console.log(finalTouches);
+        // console.log("touchEndStop");
         
       }
 
