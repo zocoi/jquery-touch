@@ -67,7 +67,6 @@
         };
         finalTouches[event.streamId] = originalTouches[event.streamId];
         touchIds.push(event.streamId);
-        console.log(event.pageX);
         _touchStart();
       }
 
@@ -77,11 +76,6 @@
           var c2 = Math.abs(originalTouches[touchIds[0]].y - originalTouches[touchIds[1]].y);
           originalDistance = Math.sqrt(c1 * c1 + c2 * c2);
         }
-        console.log('touchStart');
-        //console.log('touchIds: ');
-        //console.log(touchIds);
-        //console.log('originalTouches: ');
-        //console.log(originalTouches);
       }
 
       // Store coordinates as finger is moving
@@ -117,22 +111,11 @@
 
         } else if (touchIds.length == 2) {
           // Pinch
-          //console.log('Pinch...');
-          //console.log('touchIds: ');
-          //console.log(touchIds);
-          //console.log('originalTouches: ');
-          //console.log(originalTouches);
-          //console.log('finalTouches: ');
-          //console.log(finalTouches);
           var c1 = Math.abs(finalTouches[touchIds[0]].x - finalTouches[touchIds[1]].x);
           var c2 = Math.abs(finalTouches[touchIds[0]].y - finalTouches[touchIds[1]].y);
           finalDistance = Math.sqrt(c1 * c1 + c2 * c2);
 
           var scale = Math.round(100 * finalDistance / originalDistance) / 100;
-          //console.log('originalDistance: ' + originalDistance);
-          //console.log('finalDistance: ' + finalDistance);
-          //console.log('scale: ' + scale);
-          //console.log(scale);
           defaults.pinch(scale);
           } else {}
 
@@ -147,9 +130,7 @@
         if (touchIds.length == 1) {
           //console.log('Ending swipe gesture...')
           var changeX = originalTouches[touchIds[0]].x - finalTouches[touchIds[0]].x;
-          console.log(changeX);
           var changeY = originalTouches[touchIds[0]].y - finalTouches[touchIds[0]].y;
-          console.log(changeY);
           // Calculate if the swipe was left or right
           if (changeY < defaults.threshold.y && changeY > (defaults.threshold.y * -1)) {
 
@@ -162,36 +143,22 @@
           }
         }
         
-        // console.log('touchIds: ');
-        // console.log(touchIds);
-        // console.log('originalTouches: ');
-        // console.log(originalTouches);
-        // console.log('finalTouches: ');
-        // console.log(finalTouches);
-        
         finalDistance = originalDistance = 0;
-
 
         delete originalTouches[event.streamId];
         delete finalTouches[event.streamId];
         var index = touchIds.indexOf(event.streamId);
         touchIds.splice(index, 1);
-        // console.log("touchEnd");
-        // console.log('touchIds: ');
-        // console.log(touchIds);
-        // console.log('originalTouches: ');
-        // console.log(originalTouches);
-        // console.log('finalTouches: ');
-        // console.log(finalTouches);
-        // console.log("touchEndStop");
         
       }
 
       // Add gestures to all swipable areas
-      //this.addEventListener("touchstart", touchStart, false);
-      //this.addEventListener("touchmove", touchMove, false);
-      //this.addEventListener("touchend", touchEnd, false);
-      //this.addEventListener("touchcancel", touchCancel, false);
+      // Webkit
+      this.addEventListener("touchstart", touchStart, false);
+      this.addEventListener("touchmove", touchMove, false);
+      this.addEventListener("touchend", touchEnd, false);
+      this.addEventListener("touchcancel", touchCancel, false);
+      // Moz
       this.addEventListener("MozTouchDown", mozTouchDown, false);
       this.addEventListener("MozTouchMove", mozTouchMove, false);
       this.addEventListener("MozTouchUp", mozTouchUp, false);
